@@ -1,5 +1,13 @@
 #!/usr/bin/env node
 
+/*
+ * @Author: sam.hongyang
+ * @LastEditors: sam.hongyang
+ * @Description:
+ * @Date: 2019-03-04 17:11:56
+ * @LastEditTime: 2019-03-04 17:15:28
+ */
+
 // console.log('hello, saok-cli is coming...')
 
 const program = require('commander')

@@ -1,3 +1,11 @@
+<!--
+ * @Author: sam.hongyang
+ * @LastEditors: sam.hongyang
+ * @Description: 简单文档
+ * @Date: 2019-03-04 17:11:56
+ * @LastEditTime: 2019-03-04 17:16:29
+ -->
+
 # sako-cli (say ko to cli)
 > 基于 `nodejs` 的前端脚手架工具，用于下载相关的前端模版、编译、打包、mock服务等。
 
