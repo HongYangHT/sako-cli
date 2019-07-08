@@ -3,8 +3,12 @@
  * @LastEditors: sam.hongyang
  * @Description: 搜集相关信息
  * @Date: 2019-07-04 15:54:56
- * @LastEditTime: 2019-07-05 17:39:49
+ * @LastEditTime: 2019-07-08 10:43:17
  */
+/**
+  * 命令行交互信息收集组件
+  * https: //github.com/SBoudrias/inquirer.js
+  */
 const inquirer = require('inquirer')
 const fs = require('fs')
 const Joi = require('@hapi/joi')
@@ -207,18 +211,8 @@ const start = async (config) => {
     )
     const download = new DownloadTemplate(setting)
     download.download()
-    // setTimeout(() => {
-    //   spinner.succeed('product template load succeed !')
-    // }, 5000)
   })
 }
-
-program
-  .version('1.0.0', '-v, --version')
-  .allowUnknownOption()
-  .option('-n, --name <productName>', 'set product name', '')
-  .option('-f, --frontEnd', 'set template with frontEnd template', false)
-  .option('-b, --backEnd', 'set template with backEnd template', false)
 
 program
   .command('create-product [productName] [dir]')
@@ -236,12 +230,3 @@ program
     )
     start(config)
   })
-  .on('--help', () => {
-    console.log('')
-    console.log('Examples:')
-    console.log('  1. create new project')
-    console.log('    $ sako create-product <project-name> [dir]')
-    console.log('    $ sako create  <project-name> [dir]')
-  })
-
-// start()

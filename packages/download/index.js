@@ -3,7 +3,7 @@
  * @LastEditors: sam.hongyang
  * @Description: 下载模版
  * @Date: 2019-07-04 17:26:01
- * @LastEditTime: 2019-07-05 18:02:04
+ * @LastEditTime: 2019-07-08 14:24:53
  */
 const download = require('download-git-repo')
 const fs = require('fs')
@@ -22,10 +22,12 @@ class DownloadTemplate {
     const {
       name
     } = this.options
-    const dir = '/' + name
-    const spinner = ora(`try to mkdir with ${name}`)
+    const spinner = ora({
+      text: chalk.green(`try to mkdir with ${name}`),
+      color: 'green'
+    })
     spinner.start()
-    let isExistName = fs.existsSync(resolve(dir))
+    let isExistName = fs.existsSync(resolve(name))
     if (isExistName) {
       spinner.stop()
       console.log(
@@ -34,17 +36,23 @@ class DownloadTemplate {
       )
       return false
     }
+    spinner.succeed()
+    const down = ora({
+      text: chalk.green('try to download template'),
+      color: 'green'
+    })
+    down.start()
     download(
       'HongYangHT/sako-tpl-vue',
       name,
       { clone: true },
       err => {
         if (err) {
-          spinner.fail()
+          down.fail()
           console.log(symbols.error, chalk.yellow(err))
           return false
         }
-        spinner.succeed()
+        down.succeed()
         console.log(symbols.success, chalk.green('download template success!'))
         this.updateTemplate()
       }
@@ -53,24 +61,27 @@ class DownloadTemplate {
 
   updateTemplate () {
     const { name, version, description, author, email } = this.options
-    const dir = '/' + name
-    fs.readFile(resolve(dir + '/package.json'), (err, buffer) => {
+    fs.readFile(resolve(name + '/package.json'), (err, buffer) => {
       if (err) {
         console.log(symbols.error, chalk.yellow(err))
         return false
       }
-      shell.rm('-f', `${resolve(dir)}/.git`)
+      shell.rm('-f', `${resolve(name)}/.git`)
       let packageJson = JSON.parse(buffer)
       Object.assign(packageJson, this.options)
       fs.writeFileSync(
-        `${resolve(dir)}/package.json`,
+        `${resolve(name)}/package.json`,
         JSON.stringify(packageJson, null, 2)
       )
       fs.writeFileSync(
-        `${resolve(dir)}/README.md`,
-        `# ${name} ${version}\n> ${description} \n ${author}(${email})>`
+        `${resolve(name)}/README.md`,
+        `# ${name} ${version}\n> ${description} \n> ${author}(${email})>`
       )
-      const spinner = ora(`create product ${name} success`)
+      const spinner = ora({
+        text: chalk.green(`create product ${name} success`),
+        color: 'green'
+      })
+      spinner.start()
       spinner.succeed()
     })
   }
