@@ -5,7 +5,7 @@
  * @LastEditors: sam.hongyang
  * @Description:
  * @Date: 2019-03-04 17:11:56
- * @LastEditTime: 2019-07-08 10:46:25
+ * @LastEditTime: 2019-07-08 14:34:43
  */
 
 /**
@@ -16,7 +16,7 @@ const program = require('commander')
 const chalk = require('chalk')
 
 // 设置init
-// require('../packages/init')
+require('../packages/init')
 
 require('../packages/question')
 

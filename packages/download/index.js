@@ -3,7 +3,7 @@
  * @LastEditors: sam.hongyang
  * @Description: 下载模版
  * @Date: 2019-07-04 17:26:01
- * @LastEditTime: 2019-07-08 14:24:53
+ * @LastEditTime: 2019-07-08 14:31:33
  */
 const download = require('download-git-repo')
 const fs = require('fs')
@@ -12,6 +12,7 @@ const ora = require('ora')
 const chalk = require('chalk')
 const symbols = require('log-symbols')
 const shell = require('shelljs')
+const figlet = require('figlet')
 
 class DownloadTemplate {
   constructor (options) {
@@ -59,9 +60,22 @@ class DownloadTemplate {
     )
   }
 
+  end () {
+    return new Promise((resolve, reject) => {
+      figlet('SAKO CLI', function (err, data) {
+        if (err) {
+          console.dir(chalk.red(err))
+          reject(err)
+          return
+        }
+        console.log(chalk.magenta(data))
+        resolve()
+      })
+    })
+  }
   updateTemplate () {
     const { name, version, description, author, email } = this.options
-    fs.readFile(resolve(name + '/package.json'), (err, buffer) => {
+    fs.readFile(resolve(name + '/package.json'), async (err, buffer) => {
       if (err) {
         console.log(symbols.error, chalk.yellow(err))
         return false
@@ -77,6 +91,7 @@ class DownloadTemplate {
         `${resolve(name)}/README.md`,
         `# ${name} ${version}\n> ${description} \n> ${author}(${email})>`
       )
+      await this.end()
       const spinner = ora({
         text: chalk.green(`create product ${name} success`),
         color: 'green'

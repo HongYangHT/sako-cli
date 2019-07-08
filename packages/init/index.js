@@ -3,7 +3,7 @@
  * @LastEditors: sam.hongyang
  * @Description: 用于初始化项目
  * @Date: 2019-03-05 14:06:02
- * @LastEditTime: 2019-07-05 11:37:43
+ * @LastEditTime: 2019-07-08 14:34:20
  */
 const program = require('commander')
 /**
@@ -15,11 +15,6 @@ const figlet = require('figlet')
  * https: //github.com/chalk/chalk
  */
 const chalk = require('chalk')
-
-program
-  .option('-n, --name', 'set project name')
-  .option('-f, --frontEnd', 'set template with frontEnd template')
-  .option('-b, --backEnd', 'set template with backEnd template').parse(process.argv)
 
 program
   .command('init [projectName]')
