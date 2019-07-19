@@ -3,7 +3,7 @@
  * @LastEditors: sam.hongyang
  * @Description: 下载模版
  * @Date: 2019-07-04 17:26:01
- * @LastEditTime: 2019-07-08 14:31:33
+ * @LastEditTime: 2019-07-19 16:06:03
  */
 const download = require('download-git-repo')
 const fs = require('fs')
@@ -13,6 +13,7 @@ const chalk = require('chalk')
 const symbols = require('log-symbols')
 const shell = require('shelljs')
 const figlet = require('figlet')
+const handlebars = require('handlebars')
 
 class DownloadTemplate {
   constructor (options) {
@@ -74,7 +75,7 @@ class DownloadTemplate {
     })
   }
   updateTemplate () {
-    const { name, version, description, author, email } = this.options
+    const { name = 'sako-tpl-vue', version, description, author, email } = this.options
     fs.readFile(resolve(name + '/package.json'), async (err, buffer) => {
       if (err) {
         console.log(symbols.error, chalk.yellow(err))
@@ -91,6 +92,15 @@ class DownloadTemplate {
         `${resolve(name)}/README.md`,
         `# ${name} ${version}\n> ${description} \n> ${author}(${email})>`
       )
+      const htmlFile = `${resolve(name)}/src/index.html`
+      if (fs.existsSync(htmlFile)) {
+        const content = fs.readFileSync(htmlFile).toString()
+        // 加入前缀
+        const result = handlebars.compile(content)({
+          name
+        })
+        fs.writeFileSync(htmlFile, result)
+      }
       await this.end()
       const spinner = ora({
         text: chalk.green(`create product ${name} success`),
