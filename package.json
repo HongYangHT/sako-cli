@@ -1,6 +1,6 @@
 {
   "name": "sako-cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "> 基于 `nodejs` 的前端脚手架工具，用于下载相关的前端模版、编译、打包、mock服务等。",
   "main": "index.js",
   "bin": {
