@@ -3,7 +3,7 @@
  * @LastEditors: sam.hongyang
  * @Description: 下载模版
  * @Date: 2019-07-04 17:26:01
- * @LastEditTime: 2019-07-24 14:41:15
+ * @LastEditTime: 2019-07-24 14:46:28
  */
 const download = require('download-git-repo')
 const fs = require('fs')
@@ -95,7 +95,6 @@ class DownloadTemplate {
         `${resolve(name)}/README.md`,
         `# ${name} ${version}\n> ${description} \n> ${author}(${email})>`
       )
-
       const htmlFile = `${resolve(name)}/src/index.html`
       if (fs.existsSync(htmlFile)) {
         const content = fs.readFileSync(htmlFile).toString()
@@ -125,6 +124,7 @@ class DownloadTemplate {
         })
         fs.writeFileSync(microConfig, result)
       }
+
       await this.end()
       const spinner = ora({
         text: chalk.green(`create product ${name} success`),
