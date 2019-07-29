@@ -3,7 +3,7 @@
  * @LastEditors: sam.hongyang
  * @Description: 搜集相关信息
  * @Date: 2019-07-04 15:54:56
- * @LastEditTime: 2019-07-08 10:43:17
+ * @LastEditTime: 2019-07-29 11:42:59
  */
 /**
   * 命令行交互信息收集组件
@@ -129,7 +129,7 @@ const questions = [
     name: 'type',
     message: 'please select your project type',
     default: 0,
-    choices: ['frontend', 'backEnd'],
+    choices: ['frontend', 'backEnd', 'sako-micro-portal', 'sako-micro-tpl'],
     async validate (value) {
       return true
     }

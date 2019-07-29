@@ -3,7 +3,7 @@
  * @LastEditors: sam.hongyang
  * @Description: 下载模版
  * @Date: 2019-07-04 17:26:01
- * @LastEditTime: 2019-07-24 14:46:28
+ * @LastEditTime: 2019-07-29 11:48:55
  */
 const download = require('download-git-repo')
 const fs = require('fs')
@@ -44,21 +44,71 @@ class DownloadTemplate {
       color: 'green'
     })
     down.start()
-    download(
-      'HongYangHT/sako-tpl-vue',
-      name,
-      { clone: true },
-      err => {
+
+    switch (this.options.type) {
+    case 'frontend':
+      download(
+        'HongYangHT/sako-tpl-vue',
+        name,
+        { clone: true },
+        err => {
+          if (err) {
+            down.fail()
+            console.log(symbols.error, chalk.yellow(err))
+            return false
+          }
+          down.succeed()
+          console.log(symbols.success, chalk.green('download template success!'))
+          this.updateTemplate()
+        }
+      )
+      break
+    case 'backEnd':
+      console.log(
+        symbols.warning,
+        chalk.yellow(
+          'template with bankend is exist now, please wait for me!'
+        )
+      )
+      break
+    case 'sako-micro-portal':
+      download('HongYangHT/sako-micro-portal', name, { clone: true }, err => {
         if (err) {
           down.fail()
           console.log(symbols.error, chalk.yellow(err))
           return false
         }
         down.succeed()
-        console.log(symbols.success, chalk.green('download template success!'))
+        console.log(
+          symbols.success,
+          chalk.green('download template success!')
+        )
         this.updateTemplate()
-      }
-    )
+      })
+      break
+    case 'sako-micro-tpl':
+      download(
+        'HongYangHT/sako-micro-tpl',
+        name,
+        { clone: true },
+        err => {
+          if (err) {
+            down.fail()
+            console.log(symbols.error, chalk.yellow(err))
+            return false
+          }
+          down.succeed()
+          console.log(
+            symbols.success,
+            chalk.green('download template success!')
+          )
+          this.updateTemplate()
+        }
+      )
+      break
+    default:
+      break
+    }
   }
 
   end () {
